@@ -1,0 +1,23 @@
+{
+  "name": "slideanimation",
+  "version": "1.0.0",
+  "description": "Add  a slide animation for your element\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b\u001b[C\u001b[C\u001b\u001b[C\u001b[C\u001b[Da\u001b[D\u001b[Da slide animation for your element\u001b[C\u001b[C",
+  "main": "slideAnimation.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2920998599/slide-animation.git"
+  },
+  "keywords": [
+    "slide",
+    "animation"
+  ],
+  "author": "Lunecat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/2920998599/slide-animation/issues"
+  },
+  "homepage": "https://github.com/2920998599/slide-animation#readme"
+}
