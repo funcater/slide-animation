@@ -7,28 +7,39 @@ export default function slideAnimation (element, configs) {
 
 function init (element, configs) {
     const defaults = {
-        transformX: 0,
+        transformX: undefined,
         transformY: 0,
         duration: 500,
         show: false,
-        percent: 1,
-        scale: 0.95
+        scale: 0.95,
+        onload: null
     }
 
-    initConfig (configs, defaults)
+    initConfig (element, configs, defaults)
 
-    if (!configs.transformX) {
+    if (configs.onload) {
+        configs.onload = bindEvent(element, configs)
+    } else {
+        bindEvent(element, configs)()
+    }
+}
+
+function initConfig (element, configs, defaults) {
+    for (const prop in defaults) {
+        if (configs[prop] === undefined) {
+            configs[prop] = defaults[prop]
+        }
+    }
+
+    if (typeof configs.transformX === 'undefined') {
         const elementToLeft = element.offsetLeft
         const elementToRight = window.innerWidth - element.offsetLeft - element.offsetWidth
         configs.transformX = elementToLeft < elementToRight ? - 30 : 30
     }
 
-    if (!configs.show) {
-        configs.percent = 0
-        element.style.opacity = configs.percent
-    }
-    
-    bindEvent(element, configs)
+    configs.percent = configs.show ? 1 : 0
+    element.style.opacity = configs.percent
+    element.style.transform = `translateX(${configs.transformX * (1 - configs.percent)}%)`
 }
 
 function bindEvent (element, configs) {
@@ -39,24 +50,22 @@ function bindEvent (element, configs) {
         percent,
         scale
     } = configs
-    const elementHalfPosition = element.offsetTop + element.offsetHeight / 2
-    let elementTopIn
-    let elementBottomIn
-    let preTime
-    let animationFrame
 
-    window.addEventListener('scroll', (e) => {
-        elementTopIn = elementHalfPosition - window.scrollY
-        elementBottomIn = window.scrollY + window.innerHeight - elementHalfPosition
-    
-        const isScrollIn =  elementTopIn > 0 && elementBottomIn > 0
+    let preTime,
+        animationFrame
+    const elementHalfPosition = element.offsetTop + element.offsetHeight / 2
+
+    function scrollCallback () {
+        let elementTopIn = elementHalfPosition > window.scrollY
+        let elementBottomIn = window.scrollY + window.innerHeight > elementHalfPosition
+        const isScrollIn =  elementTopIn && elementBottomIn
         if (show ^ isScrollIn) {
             preTime = undefined
             show = !show
             cancelAnimationFrame(animationFrame)
             animationFrame = requestAnimationFrame(step)
         }
-    })
+    }
 
     function step (timeStamp) {
         if (preTime === undefined) {
@@ -75,24 +84,20 @@ function bindEvent (element, configs) {
             percent = show ? 1 : 0
             element.style.transform = `translateX(${!show ? transformX : 0}%)`
         }
-
-        function getPercent(percent, timePercent) {
-            return percent + getChangedPercent(timePercent)
-        }
-
-        function getChangedPercent(timePercent) {
-            if (!show) {
-                return - timePercent
-            }
-            return timePercent
-        }
     }
-}
 
-function initConfig (_configs, defaults) {
-    for (const prop in defaults) {
-        if (_configs[prop] === undefined) {
-            _configs[prop] = defaults[prop]
-        }
+    function getPercent(percent, timePercent) {
+        return percent + getChangedPercent(timePercent)
     }
+
+    function getChangedPercent(timePercent) {
+        if (!show) {
+            return - timePercent
+        }
+        return timePercent
+    }
+
+    window.addEventListener('scroll', scrollCallback)
+
+    return scrollCallback
 }

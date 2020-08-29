@@ -1,7 +1,7 @@
 {
   "name": "slideanimation",
   "version": "1.0.0",
-  "description": "Add  a slide animation for your element\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b\u001b[C\u001b[C\u001b\u001b[C\u001b[C\u001b[Da\u001b[D\u001b[Da slide animation for your element\u001b[C\u001b[C",
+  "description": "Add a slide animation for your element",
   "main": "slideAnimation.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
