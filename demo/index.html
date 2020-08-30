@@ -4,25 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="shortcut icon"href="myicon.ico">
 </head>
 <body>
+    <h1>Slide Animation</h1>
+    <h2>SlideAnimation.js adds a smooth transition animation</h2>
+    <img src="down.png">
+    <p>Now scroll to experience the animation</p>
+    <img src="down.png">
 
-    <div id="app" ></div>
+    <p>There is no dependency on this library</p>
+    <p>In the simplest case, you just need to call the function and pass it an element</p>
+    <img src="down.png" id='demo1'>
+
+    <p>You can also pass an object to configure the animation</p>
+    <p>TranslateX to change the distance and direction of the horizontal axis</p>
+    <img src="down.png" id='demo2'>
+
+    <p>Of course, translateY to change the distance and direction of the vertical axis</p>
+    <img src="down.png" id='demo3'>
+
+    <p>Scale to resize the element as it slides</p>
+    <img src="down.png" id='demo4'>
+
+    <p>Duration to reset the time to execute the animation</p>
+    <img src="down.png" id='demo5'>
+
+    <p>Show affect whether the animation is performed the first time</p>
+    <p>And you will need onload if the element takes time to load</p>
+    <img src="down.png" id='demo6'>
 
     <style>
         html {
             text-align: center;
+            font-family: sans-serif;
+            font-size: 25px;
         }
-        #app {
-            background-color: #ffc600;
-            width: 200px;
-            height: 200px;
-            margin-left: 600px;
-            position: absolute;
+
+        p {
+            margin: 50px 0;
+        }
+
+        h1 {
+            font-size: 120px;
+            margin-top: 150px;
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 50px;
         }
     </style>
 
     <script src="./index.js" type="module"></script>
-
 </body>
 </html>

@@ -7,11 +7,11 @@ export default function slideAnimation (element, configs) {
 
 function init (element, configs) {
     const defaults = {
-        transformX: undefined,
-        transformY: 0,
-        duration: 500,
-        show: false,
-        scale: 0.95,
+        translateX: undefined,  // the distance and direction of the horizontal axis
+        translateY: 0,  // the distance and direction of the vertical axis
+        duration: 500,  // the time to execute the animation
+        show: false,  // affect whether the animation is performed the first time
+        scale: 0.95,  // resize the element
         onload: null
     }
 
@@ -31,21 +31,22 @@ function initConfig (element, configs, defaults) {
         }
     }
 
-    if (typeof configs.transformX === 'undefined') {
+    if (typeof configs.translateX === 'undefined') {
         const elementToLeft = element.offsetLeft
         const elementToRight = window.innerWidth - element.offsetLeft - element.offsetWidth
-        configs.transformX = elementToLeft < elementToRight ? - 30 : 30
+        configs.translateX = elementToLeft < elementToRight ? - 0.3 : 0.3
     }
+    configs.translateX *= 100
+    configs.translateY *= 100
 
     configs.percent = configs.show ? 1 : 0
-    element.style.opacity = configs.percent
-    element.style.transform = `translateX(${configs.transformX * (1 - configs.percent)}%)`
 }
 
 function bindEvent (element, configs) {
     let {
         show,
-        transformX,
+        translateX,
+        translateY,
         duration,
         percent,
         scale
@@ -76,14 +77,21 @@ function bindEvent (element, configs) {
         if (percent <= 1 && percent >= 0) {
             preTime = timeStamp
             percent = getPercent(percent, changedTime / duration)
-            
-            element.style.transform = `translateX(${transformX * (1 - percent)}%) scale(${scale + (1 - scale) * percent})`
-            element.style.opacity = percent
+            updateAnimation()
             animationFrame = requestAnimationFrame(step)
         } else {
             percent = show ? 1 : 0
-            element.style.transform = `translateX(${!show ? transformX : 0}%)`
+            updateAnimation()
         }
+    }
+
+    function updateAnimation () {
+        element.style.transform = `
+            translateX(${translateX * (1 - percent)}%)
+            scale(${scale + (1 - scale) * percent})
+            translateY(${translateY * (1 - percent)}%)
+        `
+        element.style.opacity = percent
     }
 
     function getPercent(percent, timePercent) {
