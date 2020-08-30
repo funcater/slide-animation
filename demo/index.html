@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="shortcut icon"href="myicon.ico">
+    <link rel="shortcut icon" href="myicon.ico">
 </head>
 <body>
     <h1>Slide Animation</h1>
@@ -34,6 +34,12 @@
     <p>And you will need onload if the element takes time to load</p>
     <img src="down.png" id='demo6'>
 
+    <p>With awesome callback and trigger, things will be different</p>
+    <div id='demo7'></div>
+
+    <p class="thanks">Thanks for watching</p>
+    <a id="demo8" href="https://github.com/funcater/slide-animation">[code]</a>
+
     <style>
         html {
             text-align: center;
@@ -54,6 +60,41 @@
         h2 {
             font-size: 30px;
             margin-bottom: 50px;
+        }
+
+        #demo7 {
+            margin: 0 auto 50px;
+            width: 128px;
+            height: 128px;
+            background-image: url(awesome1.png);
+            background-size: 128px 128px;
+            position: relative;
+        }
+
+        #demo7.msg::after {
+            content: 'click here';
+            display: block;
+            font-size: 18px;
+            padding: 5px 10px;
+            background-image: url(dialog.png);
+            background-size: 101px 35px;
+            color: cornflowerblue;
+            position: absolute;
+            left: -90px;
+        }
+
+        #demo7.active {
+            background: url(awesome.png) 0 -7px;
+        }
+
+        .thanks {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        #demo8 {
+            padding: 50px 0 100px;
+            
         }
     </style>
 

@@ -12,7 +12,10 @@ function init (element, configs) {
         duration: 500,  // the time to execute the animation
         show: false,  // affect whether the animation is performed the first time
         scale: 0.95,  // resize the element
-        onload: null
+        onload: null,  // perform animation after onload event
+        callback: null,  // execute something after animation
+        triggerAnimation: null,
+        triggerEvent: 'scroll'
     }
 
     initConfig (element, configs, defaults)
@@ -49,18 +52,31 @@ function bindEvent (element, configs) {
         translateY,
         duration,
         percent,
-        scale
+        scale,
+        triggerAnimation,
+        callback,
+        triggerEvent
     } = configs
 
     let preTime,
         animationFrame
-    const elementHalfPosition = element.offsetTop + element.offsetHeight / 2
+
+    if (!triggerAnimation){
+        triggerAnimation = function (execute) {
+            const elementHalfPosition = element.offsetTop + element.offsetHeight / 2
+            let elementTopIn = elementHalfPosition > window.scrollY
+            let elementBottomIn = window.scrollY + window.innerHeight > elementHalfPosition
+            const isScrollIn =  elementTopIn && elementBottomIn
+            execute(isScrollIn)
+        }
+    }
 
     function scrollCallback () {
-        let elementTopIn = elementHalfPosition > window.scrollY
-        let elementBottomIn = window.scrollY + window.innerHeight > elementHalfPosition
-        const isScrollIn =  elementTopIn && elementBottomIn
-        if (show ^ isScrollIn) {
+        triggerAnimation(executeAnimation)
+    }
+
+    function executeAnimation (isShown) {
+        if (show ^ isShown) {
             preTime = undefined
             show = !show
             cancelAnimationFrame(animationFrame)
@@ -82,6 +98,7 @@ function bindEvent (element, configs) {
         } else {
             percent = show ? 1 : 0
             updateAnimation()
+            callback && callback()
         }
     }
 
@@ -105,7 +122,7 @@ function bindEvent (element, configs) {
         return timePercent
     }
 
-    window.addEventListener('scroll', scrollCallback)
+    window.addEventListener(triggerEvent, scrollCallback)
 
     return scrollCallback
 }
