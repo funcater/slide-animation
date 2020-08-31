@@ -43,6 +43,7 @@ function initConfig (element, configs, defaults) {
     configs.translateY *= 100
 
     configs.percent = configs.show ? 1 : 0
+    element.style.opacity = configs.percent
 }
 
 function bindEvent (element, configs) {
@@ -76,7 +77,7 @@ function bindEvent (element, configs) {
     }
 
     function executeAnimation (isShown) {
-        if (show ^ isShown) {
+        if (isShown === undefined || show ^ isShown) {
             preTime = undefined
             show = !show
             cancelAnimationFrame(animationFrame)
