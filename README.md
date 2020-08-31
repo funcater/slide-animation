@@ -2,15 +2,15 @@
 Slide-animation is a stand alone library that helps users add smooth slide animations to their elements quickly. Users can invoke methods imported from slideAnimation.js and pass parameters to create their own animation.
 ### Usage
 In the simplest case, it only takes a few lines to get a slide animation.
-`
+```
   <img src="down.png" id='demo1'>
   <script type="module">
     import slideAnimation from '../slideAnimation.js'
     slideAnimation(document.getElementById('demo1'))
   </script>
-`
+```
 To create your own animation instead of using default animation, you will need to pass it some parameters.
-`
+```
   <img src="down.png" id='demo2'>
   <script type="module">
     import slideAnimation from '../slideAnimation.js'
@@ -22,9 +22,9 @@ To create your own animation instead of using default animation, you will need t
       onload: demo2.onload
     })
   </script>
-`
+```
 With awesome callback and trigger, things will be different.
-`
+```
   <img src="backToTopButton.png" id='backToTopButton'>
   <script type="module">
     import slideAnimation from '../slideAnimation.js'
@@ -53,6 +53,6 @@ With awesome callback and trigger, things will be different.
       }
     })
   </script>
-`
+```
 ###License
 slide-animation is covered by the MIT License
