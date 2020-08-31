@@ -54,5 +54,5 @@ With awesome callback and trigger, things will be different.
     })
   </script>
 ```
-###License
+### License
 slide-animation is covered by the MIT License
