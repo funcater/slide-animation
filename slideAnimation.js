@@ -20,11 +20,32 @@ function init (element, configs) {
 
     initConfig (element, configs, defaults)
 
+    const originTransform = getTransformArray(element)
+
     if (configs.onload) {
-        configs.onload = bindEvent(element, configs)
+        configs.onload = bindEvent(element, configs, originTransform)
     } else {
-        bindEvent(element, configs)()
+        bindEvent(element, configs, originTransform)()
     }
+}
+
+function getTransformArray (element) {
+    const transformStyle = getStyle(element, 'transform')
+
+    if (transformStyle === 'none') return [1, 0, 0, 1, 0, 0]
+
+    return transformStyle.split('(')[1].split(')')[0].split(', ')
+}
+
+function getStyle (obj, prop) {
+    if (obj.currentStyle) {
+        return obj.currentStyle[prop]
+    } else if (window.getComputedStyle) {
+        let propprop = prop.replace(/([A-Z])/g, "-$1")
+        propprop = prop.toLowerCase()
+        return document.defaultView.getComputedStyle(obj, null)[propprop]
+    }
+    return null;
 }
 
 function initConfig (element, configs, defaults) {
@@ -46,7 +67,7 @@ function initConfig (element, configs, defaults) {
     element.style.opacity = configs.percent
 }
 
-function bindEvent (element, configs) {
+function bindEvent (element, configs, originTransform) {
     let {
         show,
         translateX,
@@ -104,11 +125,14 @@ function bindEvent (element, configs) {
     }
 
     function updateAnimation () {
-        element.style.transform = `
-            translateX(${translateX * (1 - percent)}%)
-            scale(${scale + (1 - scale) * percent})
-            translateY(${translateY * (1 - percent)}%)
-        `
+        const transformChanged = originTransform.join(',').split(',')
+
+        transformChanged[4] = +originTransform[4] + translateX * (1 - percent)
+        transformChanged[5] = +originTransform[5] + translateY * (1 - percent)
+        transformChanged[0] = +originTransform[0] * (scale + (1 - scale) * percent)
+        transformChanged[3] = +originTransform[3] * (scale + (1 - scale) * percent)
+
+        element.style.transform = 'matrix(' + transformChanged.join(',') + ')'
         element.style.opacity = percent
     }
 
